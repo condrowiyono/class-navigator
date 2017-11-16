@@ -1,15 +1,23 @@
 ### Class Navigator - Web Service Project
 
 ####Deskripsi
+
 Class Navigator adalah sebuah web service yang akan memerikan petunjuk ruangan dari sebuah ruang kelas di ITB. Penggunaan web service untuk memberikan informasi dan petunjuk jalan dari lokasi sekarang ke lokasi kelas tujuan
 
 #### Batasan
+
 - Ruang kelas umum 
+
 ####Human
+
 Condro Wiyono - 18215042
+
 ####Sample Input and Output 
+
 **Input**
+
 Sample input : 
+
 ````json
 [
 	{
@@ -19,9 +27,13 @@ Sample input :
 	}
 ]
 ```` 
+
 **Proses**
+
 Data masukan akan diolah sedemikian sehingga menghasilkan hasil berupa informasi ruangan ( di gedung apa, lantai berapa, di jalan apa) dan juga hasil navigasi dengan Google Navigator API ( jika ada )
+
 **Output**
+
 Sample output
 ````json
 	{
@@ -129,17 +141,22 @@ Sample output
 }
 	}
 ````
+
 ####Instalation and Ussage
+
 Make sure you've installed Go Lang and MySQL
 ````
 go build
 ````
 
 You can access on [http://localhost:8181](http://localhost:8181)
+
 ####Use Case dan Modeling
+
 In Progress
 
 ####Requirements
+
 **Functional Requirements**
 
 - Sistem dapat memberikan informasi tentang sebuah ruang kelas
@@ -158,6 +175,7 @@ In Progress
 - Kesalahan sistem yang ditoleransi adalah 3 %
 
 ####Technology Used for Implementation
+
 - Linux-based Operating System
 - Server (VPS, or local server, TBA)
 - REST Client ( cURL, Browser, dll)
@@ -165,6 +183,7 @@ In Progress
 - Google Maps Direction API
 
 ####Development Environment
+
 - Dell Inspiron 3458 with Core i5 5200U
 - 4 GB of RAM
 - 500 GB Storage
@@ -177,15 +196,19 @@ In Progress
 - Some Snack and Tea
 
 ####Deployment Environment
+
 - Maybe VPS
 - Localy ( Go Web Server package, mySQL )
 - cURL
 
 ####Future Development
+
 Some futute project you may concern
 - an Android App to implements this service
 - an Web-Base App
+
 ####Licence 
+
 * Educational purpose only
 * Google Maps, Go are copyrighted by Google
 
