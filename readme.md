@@ -1,18 +1,18 @@
-### Class Navigator - Web Service Project
+#Class Navigator - Web Service Project
 
-####Deskripsi
+##Deskripsi
 
 Class Navigator adalah sebuah web service yang akan memerikan petunjuk ruangan dari sebuah ruang kelas di ITB. Penggunaan web service untuk memberikan informasi dan petunjuk jalan dari lokasi sekarang ke lokasi kelas tujuan
 
-#### Batasan
+## Batasan
 
 - Ruang kelas umum 
 
-####Human
+## Human
 
 Condro Wiyono - 18215042
 
-####Sample Input and Output 
+## Sample Input and Output 
 
 **Input**
 
@@ -142,7 +142,7 @@ Sample output
 	}
 ````
 
-####Instalation and Ussage
+## Instalation and Ussage
 
 Make sure you've installed Go Lang and MySQL
 ````
@@ -151,11 +151,11 @@ go build
 
 You can access on [http://localhost:8181](http://localhost:8181)
 
-####Use Case dan Modeling
+## Use Case dan Modeling
 
 In Progress
 
-####Requirements
+## Requirements
 
 **Functional Requirements**
 
@@ -174,7 +174,7 @@ In Progress
 - Up-time web service adalah 24/7, dengan toleransi sistem mati sebesar 5%
 - Kesalahan sistem yang ditoleransi adalah 3 %
 
-####Technology Used for Implementation
+## Technology Used for Implementation
 
 - Linux-based Operating System
 - Server (VPS, or local server, TBA)
@@ -182,7 +182,7 @@ In Progress
 - Go Lang
 - Google Maps Direction API
 
-####Development Environment
+## Development Environment
 
 - Dell Inspiron 3458 with Core i5 5200U
 - 4 GB of RAM
@@ -195,19 +195,19 @@ In Progress
 - Other Tools : StarUML, Terminal, some refreshement stuf (Spotify, TuxRacer,Frozen Bubble)
 - Some Snack and Tea
 
-####Deployment Environment
+## Deployment Environment
 
 - Maybe VPS
 - Localy ( Go Web Server package, mySQL )
 - cURL
 
-####Future Development
+## Future Development
 
 Some futute project you may concern
 - an Android App to implements this service
 - an Web-Base App
 
-####Licence 
+## Licence 
 
 * Educational purpose only
 * Google Maps, Go are copyrighted by Google
