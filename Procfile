@@ -1,1 +1,1 @@
-web: helloword
+web: class-navigator
