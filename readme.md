@@ -1,6 +1,6 @@
-#Class Navigator - Web Service Project
+# Class Navigator - Web Service Project
 
-##Deskripsi
+## Deskripsi
 
 Class Navigator adalah sebuah web service yang akan memerikan petunjuk ruangan dari sebuah ruang kelas di ITB. Penggunaan web service untuk memberikan informasi dan petunjuk jalan dari lokasi sekarang ke lokasi kelas tujuan
 
