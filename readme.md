@@ -7,6 +7,7 @@ Class Navigator adalah sebuah web service yang akan memerikan petunjuk ruangan d
 ## Batasan
 
 - Ruang kelas umum 
+- Ruang umum
 
 ## Human
 
@@ -49,111 +50,205 @@ Sample output
 				   },
 		"navigation": 
 		{
-  "status": "OK",
-  "geocoded_waypoints" : [
-     {
-        "geocoder_status" : "OK",
-        "place_id" : "ChIJ7cv00DwsDogRAMDACa2m4K8",
-        "types" : [ "locality", "political" ]
-     },
-     {
-        "geocoder_status" : "OK",
-        "place_id" : "ChIJ69Pk6jdlyIcRDqM1KDY3Fpg",
-        "types" : [ "locality", "political" ]
-     },
-     {
-        "geocoder_status" : "OK",
-        "place_id" : "ChIJgdL4flSKrYcRnTpP0XQSojM",
-        "types" : [ "locality", "political" ]
-     },
-     {
-        "geocoder_status" : "OK",
-        "place_id" : "ChIJE9on3F3HwoAR9AhGJW_fL-I",
-        "types" : [ "locality", "political" ]
-     }
-  ],
-  "routes": [ {
-    "summary": "I-40 W",
-    "legs": [ {
-      "steps": [ {
-        "travel_mode": "DRIVING",
-        "start_location": {
-          "lat": 41.8507300,
-          "lng": -87.6512600
-        },
-        "end_location": {
-          "lat": 41.8525800,
-          "lng": -87.6514100
-        },
-        "polyline": {
-          "points": "a~l~Fjk~uOwHJy@P"
-        },
-        "duration": {
-          "value": 19,
-          "text": "1 min"
-        },
-        "html_instructions": "Head \u003cb\u003enorth\u003c/b\u003e on \u003cb\u003eS Morgan St\u003c/b\u003e toward \u003cb\u003eW Cermak Rd\u003c/b\u003e",
-        "distance": {
-          "value": 207,
-          "text": "0.1 mi"
-        }
+   "geocoded_waypoints" : [
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJgYxZXlfmaC4R3mmubrgd0KQ",
+         "types" : [ "route" ]
       },
-      ...
-      ... additional steps of this leg
-    ...
-    ... additional legs of this route
-      "duration": {
-        "value": 74384,
-        "text": "20 hours 40 mins"
-      },
-      "distance": {
-        "value": 2137146,
-        "text": "1,328 mi"
-      },
-      "start_location": {
-        "lat": 35.4675602,
-        "lng": -97.5164276
-      },
-      "end_location": {
-        "lat": 34.0522342,
-        "lng": -118.2436849
-      },
-      "start_address": "Oklahoma City, OK, USA",
-      "end_address": "Los Angeles, CA, USA"
-    } ],
-    "copyrights": "Map data ©2010 Google, Sanborn",
-    "overview_polyline": {
-      "points": "a~l~Fjk~uOnzh@vlbBtc~@tsE`vnApw{A`dw@~w\\|tNtqf@l{Yd_Fblh@rxo@b}@xxSfytAblk@xxaBeJxlcBb~t@zbh@jc|Bx}C`rv@rw|@rlhA~dVzeo@vrSnc}Axf]fjz@xfFbw~@dz{A~d{A|zOxbrBbdUvpo@`cFp~xBc`Hk@nurDznmFfwMbwz@bbl@lq~@loPpxq@bw_@v|{CbtY~jGqeMb{iF|n\\~mbDzeVh_Wr|Efc\\x`Ij{kE}mAb~uF{cNd}xBjp]fulBiwJpgg@|kHntyArpb@bijCk_Kv~eGyqTj_|@`uV`k|DcsNdwxAott@r}q@_gc@nu`CnvHx`k@dse@j|p@zpiAp|gEicy@`omFvaErfo@igQxnlApqGze~AsyRzrjAb__@ftyB}pIlo_BflmA~yQftNboWzoAlzp@mz`@|}_@fda@jakEitAn{fB_a]lexClshBtmqAdmY_hLxiZd~XtaBndgC"
-    },
-    "warnings": [ ],
-    "waypoint_order": [ 0, 1 ],
-    "bounds": {
-      "southwest": {
-        "lat": 34.0523600,
-        "lng": -118.2435600
-      },
-      "northeast": {
-        "lat": 41.8781100,
-        "lng": -87.6297900
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJO08GFljmaC4RumV5itwJCgo",
+         "types" : [ "route" ]
       }
-    }
-  } ]
+   ],
+   "routes" : [
+      {
+         "bounds" : {
+            "northeast" : {
+               "lat" : -6.8881308,
+               "lng" : 107.6099633
+            },
+            "southwest" : {
+               "lat" : -6.8910557,
+               "lng" : 107.6082303
+            }
+         },
+         "copyrights" : "Data peta ©2017 Google",
+         "legs" : [
+            {
+               "distance" : {
+                  "text" : "0,6 km",
+                  "value" : 612
+               },
+               "duration" : {
+                  "text" : "8 menit",
+                  "value" : 458
+               },
+               "end_address" : "\"Jalan D ITB, Lb. Siliwangi, Coblong, Kota Bandung, Jawa Barat 40132, Indonesia",
+               "end_location" : {
+                  "lat" : -6.8881308,
+                  "lng" : 107.6083307
+               },
+               "start_address" : "Jl. II, Lb. Siliwangi, Coblong, Kota Bandung, Jawa Barat 40132, Indonesia",
+               "start_location" : {
+                  "lat" : -6.8908204,
+                  "lng" : 107.6099633
+               },
+               "steps" : [
+                  {
+                     "distance" : {
+                        "text" : "75 m",
+                        "value" : 75
+                     },
+                     "duration" : {
+                        "text" : "1 menit",
+                        "value" : 53
+                     },
+                     "end_location" : {
+                        "lat" : -6.891032,
+                        "lng" : 107.609463
+                     },
+                     "html_instructions" : "Pergilah ke \u003cb\u003ebarat\u003c/b\u003e menuju ke \u003cb\u003eJl. II\u003c/b\u003e",
+                     "polyline" : {
+                        "points" : "rz`i@gqxoS@xA@B@@@@@@@?@?Z?"
+                     },
+                     "start_location" : {
+                        "lat" : -6.8908204,
+                        "lng" : 107.6099633
+                     },
+                     "travel_mode" : "WALKING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "84 m",
+                        "value" : 84
+                     },
+                     "duration" : {
+                        "text" : "1 menit",
+                        "value" : 64
+                     },
+                     "end_location" : {
+                        "lat" : -6.8910557,
+                        "lng" : 107.6087048
+                     },
+                     "html_instructions" : "Belok \u003cb\u003ekanan\u003c/b\u003e ke \u003cb\u003eJl. II\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "|{`i@cnxoSBtB?\\@B"
+                     },
+                     "start_location" : {
+                        "lat" : -6.891032,
+                        "lng" : 107.609463
+                     },
+                     "travel_mode" : "WALKING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0,1 km",
+                        "value" : 137
+                     },
+                     "duration" : {
+                        "text" : "2 menit",
+                        "value" : 104
+                     },
+                     "end_location" : {
+                        "lat" : -6.890138299999999,
+                        "lng" : 107.6090622
+                     },
+                     "html_instructions" : "Belok \u003cb\u003ekanan\u003c/b\u003e ke \u003cb\u003eJl. C ITB\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "b|`i@kixoSmA??KCo@ACACCACAEAE?Y?[BE?QA"
+                     },
+                     "start_location" : {
+                        "lat" : -6.8910557,
+                        "lng" : 107.6087048
+                     },
+                     "travel_mode" : "WALKING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "92 m",
+                        "value" : 92
+                     },
+                     "duration" : {
+                        "text" : "1 menit",
+                        "value" : 65
+                     },
+                     "end_location" : {
+                        "lat" : -6.8901425,
+                        "lng" : 107.6082303
+                     },
+                     "html_instructions" : "Belok \u003cb\u003ekiri\u003c/b\u003e menuju \u003cb\u003e\"Jalan D ITB\u003c/b\u003e",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "jv`i@skxoS?@AB@xA?dA"
+                     },
+                     "start_location" : {
+                        "lat" : -6.890138299999999,
+                        "lng" : 107.6090622
+                     },
+                     "travel_mode" : "WALKING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0,2 km",
+                        "value" : 224
+                     },
+                     "duration" : {
+                        "text" : "3 menit",
+                        "value" : 172
+                     },
+                     "end_location" : {
+                        "lat" : -6.8881308,
+                        "lng" : 107.6083307
+                     },
+                     "html_instructions" : "Belok \u003cb\u003ekanan\u003c/b\u003e ke \u003cb\u003e\"Jalan D ITB\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eTujuan ada di sebelah kanan.\u003c/div\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "jv`i@mfxoS}AA{AAeBAuAEWECA"
+                     },
+                     "start_location" : {
+                        "lat" : -6.8901425,
+                        "lng" : 107.6082303
+                     },
+                     "travel_mode" : "WALKING"
+                  }
+               ],
+               "traffic_speed_entry" : [],
+               "via_waypoint" : []
+            }
+         ],
+         "overview_polyline" : {
+            "points" : "rz`i@gqxoSB|ABB`@@BrC@BmA?C{@CGSEmA@?dDyDC{DG[G"
+         },
+         "summary" : "\"Jalan D ITB",
+         "warnings" : [
+            "Petunjuk arah berjalan kaki masih versi beta. Waspadalah – Mungkin ada trotoar atau jalan setapak yang tidak tampak dalam rute ini."
+         ],
+         "waypoint_order" : []
+      }
+   ],
+   "status" : "OK"
 }
-	}
 ````
 
 ## Instalation and Ussage
 
-Make sure you've installed Go Lang and MySQL
+- Make sure you've installed Go Lang and MySQL
+- Clone the git
+- Run this
 ````
-go build
+go build 
 ````
 
 You can access on [http://localhost:8181](http://localhost:8181)
 
 ## Use Case dan Modeling
 
-In Progress
+See here :
+(https://github.com/condrowiyono/class-navigator/tree/master/modelling)
 
 ## Requirements
 
@@ -193,7 +288,7 @@ In Progress
 - Web Server : Golang based net package
 - Database : MySQL / MariaDB
 - Other Tools : StarUML, Terminal, some refreshement stuf (Spotify, TuxRacer,Frozen Bubble)
-- Some Snack and Tea
+- Some Snack and Tea (hot Chocho is the best)
 
 ## Deployment Environment
 
@@ -205,7 +300,7 @@ In Progress
 
 Some futute project you may concern
 - an Android App to implements this service
-- an Web-Base App
+- a Web-Base App
 
 ## Licence 
 
