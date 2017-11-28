@@ -1,28 +1,44 @@
 package main
 import (
-  "log"
-  "fmt"
-  "net/http"
+  "encoding/json"
   "os"
+  "net/http"
+  "fmt"
+  "log"
 )
-func determineListenAddress() (string, error) {
-  port := os.Getenv("PORT")
-  if port == "" {
-    return "", fmt.Errorf("$PORT not set")
-  }
-  return ":" + port, nil
+
+type Config struct {
+    Database struct {
+        Host     string `json:"host"`
+        Password string `json:"password"`
+    } `json:"database"`
+    Host string `json:"host"`
+    Port string `json:"port"`
 }
+
+func LoadConfiguration() (Config,error) {
+    var config Config
+    configFile, err := os.Open("conf.json")
+    defer configFile.Close()
+    if err != nil {
+        fmt.Println(err.Error())
+    }
+    jsonParser := json.NewDecoder(configFile)
+    jsonParser.Decode(&config)
+    return config,nil
+}
+
+func main() {
+	config,err := LoadConfiguration()
+	if err != nil {
+    	log.Fatal(err)
+  	}
+	addr := config.Port
+	http.HandleFunc("/", hello)
+	log.Printf("Server starting on port %v\n", addr)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v",addr),nil))
+}
+
 func hello(w http.ResponseWriter, r *http.Request) {
   fmt.Fprintln(w, "Hello World")
-}
-func main() {
-  addr, err := determineListenAddress()
-  if err != nil {
-    log.Fatal(err)
-  }
-  http.HandleFunc("/", hello)
-  log.Printf("Listening on %s...\n", addr)
-  if err := http.ListenAndServe(addr, nil); err != nil {
-    panic(err)
-  }
 }
