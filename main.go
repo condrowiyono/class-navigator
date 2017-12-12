@@ -6,17 +6,32 @@ import (
   "strconv"
   "class-navigator/views"
   "class-navigator/controllers"
+  "os"
 )
 
 
 var index *views.View
+var documentation *views.View
+var about *views.View
 var psqlInfo string
+var config Config
 
+func Init() {
+	config,_ = LoadConfiguration()
+}
+
+func GetPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Println("[-] No PORT environment variable detected. Setting to ", port)
+	}
+	return ":" + port
+}
 
 func main() {
 	//LOADING CONFIGURATION
-	config,err := LoadConfiguration()
-	if err != nil { log.Fatal(err) }
+	Init()
   	intport,err :=strconv.Atoi(config.Database.Port)
 	if err != nil { log.Fatal(err) }
 	psqlInfo = fmt.Sprintf("host=%s port=%d user=%s "+
@@ -27,10 +42,14 @@ func main() {
 			    config.Database.DBName)
 	
 	//CONFIGURE THE PORT
-	addr := config.Port
+	
+	addr := GetPort() 
+	
 
 	//ROUTER
 	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/documentation", docHandler)
+	http.HandleFunc("/about", aboutHandler)
 	http.HandleFunc("/class-navigator/", func(w http.ResponseWriter, r *http.Request){
 		switch r.Method {
 		case "GET" :
@@ -63,7 +82,7 @@ func main() {
 	})
 
 	log.Printf("Server starting on port %v\n", addr)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v",addr),nil))
+	log.Fatal(http.ListenAndServe(addr,nil))
 }
 
 
@@ -71,4 +90,12 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	index = views.NewView("bootstrap", "views/index.gohtml" )
   	index.Render(w, nil)
 }
+func docHandler(w http.ResponseWriter, r *http.Request) {  
+	documentation = views.NewView("bootstrap", "views/documentation.gohtml" )
+  	documentation.Render(w, nil)
+}
 
+func aboutHandler(w http.ResponseWriter, r *http.Request) {  
+	about = views.NewView("bootstrap", "views/about.gohtml" )
+  	about.Render(w, nil)
+}

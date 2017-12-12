@@ -1,8 +1,44 @@
 {{define "yield"}}
-<div class="container">  
-  <div class="jumbotron">
-    <h1>Welcome to my site!</h1>
-    <p>This is where I would normally ask you to sign up for something.</p>
-  </div>
-</div>  
+<!-- Add Google Maps -->
+<div id="googleMap" style="height:500px;width:100%;"></div>
+<script>
+function initMap() {
+  var myCenter = new google.maps.LatLng(-6.89148, 107.6106591);
+  var mapProp = {center:myCenter, zoom:17, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
+  var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+  var marker = new google.maps.Marker({position:myCenter});
+  marker.setMap(map);
+}
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlFtIPLBqu67Leb_UHF21OEi6aCMCYD8o&callback=initMap">
+</script>
+
+<div class="jumbotron text-center">
+  <h1>ITB Room Navigation System</h1> 
+  <p>Never get lost at home</p> 
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <h2 style="text-align: center;">About the system</h2><br>
+      <p style=""><b>IRoNiS</b> ( ITB Room Navigation System) is a RESTful Web Service to search a room in the ITB. 
+      	This Service allow you to get the information about the room you wanna attend to.
+      	Imagine if theres traffic jam in the morning and you should attend class immidietly but you dont know in which floor, which building you should go. Its kind of 'nyebeli'. With this service there will be no condition like that. You can search the room you should attend to, get the description, get navigated, and get info about the floor so you can quickly use the lift (if allowed). Attend class quickly, get higher mark. ;)
+      </p>
+      <h2 style="text-align: center;">About the tech</h2><br>
+      <p style="">This service brought to you by Go Lang and PostgreSQL. Thank's to them.
+      </p>
+      <hr>
+      <h4>Get to know how to use it in <a href="/documentation">Documentation</a> or how to build one, maybe you are interested developing things like this in <a href="/bts"> Behind the Scene </a>.
+    </div>
+  </div> 
+  <hr>
+  <div style="display: block; height: 20px"></div>
+   <div class="row" >
+   		<div class="col-sm-6 col-sm-offset-3">
+	      <h2 style="font-weight: 400; text-align: center;">Hope everybody enjoying this. And finally thank you, its hard term, but thanks God its over now. Hope everybody have good holiday.</h2> 
+  		</div>
+ 	</div>
+</div>
 {{end}}

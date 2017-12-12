@@ -1,0 +1,72 @@
+{{define "yield"}}
+<div class="container-fluid">
+<div style="display: block; height: 80px"></div>	
+<div class="row">
+	<div class="col-md-8 col-md-offset-2" >
+		<h2>Simple usage</h2>
+		An example of getting a class quickly could look like this
+		<pre><code class="html">GET http://localhost:8080/class-navigator?q=7601</code></pre>
+		This would render a JSON response like the following
+		<pre><code class="json">
+{	
+	"Code":"7601",
+	"Name":"Ruang Kuliah 7601",
+	"Description":"Ruang kelas reguler untuk prodi IF",
+	"Building":"Labtek V / Gd Benny Subianto",
+	"Floor":1,
+	"Long":107.60758972167969,
+	"Lat":-6.890581130981445
+}
+		</code></pre>
+		<h2> JSON Explained!</h2>
+		<table class="table">
+			<thead>
+				<td>No</td>
+				<td>Attribute</td>
+				<td>Descprition</td>
+			</thead>
+			<tr>
+				<td>1</td>
+				<td>Code</td>
+				<td>Room code using by ITB Room Commission for organized purpose</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>Name</td>
+				<td>Room Name more about the Room Code</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>Description</td>
+				<td>Room descrption to explained more about the room. ex. '7601 is room mainly used by STI students'</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>Building</td>
+				<td>In which building this room exists</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>Floor</td>
+				<td>In which floor of the building</td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td>Long</td>
+				<td>Longitude of the Building that can be used to guide / route the building from where are you stand</td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>Lat</td>
+				<td>Latitude of the Building that can be used to guide / route the building from where are you stand</td>
+			</tr>
+
+		</table>
+		<h2> Sample Web App using this API</h2>
+		- Navigator Sample
+</div>
+</div>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+{{end}}
