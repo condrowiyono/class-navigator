@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"log"
 	"database/sql"
-	_ "class-navigator/lib/pq"
+	_ "github.com/lib/pq"
 	"class-navigator/models"
 	"strconv" 
 	"io"
