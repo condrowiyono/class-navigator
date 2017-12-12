@@ -14,6 +14,7 @@ import (
 var index *views.View
 var documentation *views.View
 var about *views.View
+var guide *views.View
 var psqlInfo string
 var config Config
 
@@ -65,6 +66,7 @@ func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/documentation", docHandler)
 	http.HandleFunc("/about", aboutHandler)
+	http.HandleFunc("/guide", guideHandler)
 	http.HandleFunc("/class-navigator/", func(w http.ResponseWriter, r *http.Request){
 		switch r.Method {
 		case "GET" :
@@ -113,4 +115,9 @@ func docHandler(w http.ResponseWriter, r *http.Request) {
 func aboutHandler(w http.ResponseWriter, r *http.Request) {  
 	about = views.NewView("bootstrap", "views/about.gohtml" )
   	about.Render(w, nil)
+}
+
+func guideHandler(w http.ResponseWriter, r *http.Request) {  
+	guide = views.NewView("bootstrap", "views/guide.gohtml" )
+  	guide.Render(w, nil)
 }

@@ -1,0 +1,135 @@
+{{define "yield"}}
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBK0x7auZRYYNaZfY13fz-Kh_B-bKMzsII&libraries=places"></script>
+    <script type="text/javascript">
+        var dest
+        $.ajax({
+          url: '//class-navigator.herokuapp.com/class-navigator?q=7601',
+          type: "GET",
+          dataType: "json",
+          success: function(data)
+          {
+              var long = data.Long;
+              var lat = data.Lat;
+              dest = String(lat+','+long);
+              $('#txtDestination').val(dest);
+              console.log(dest);
+              $('#ruang').html(data.Name);
+              $('#code').html(data.Code);
+              $('#name').html(data.Name);
+              $('#description').html(data.Description);
+              $('#building').html(data.Building);
+              $('#floor').html(data.Floor);
+              $('#coor').html(dest);
+
+          }
+        });
+        var source, destination;
+        var directionsDisplay;
+        var directionsService = new google.maps.DirectionsService();
+        google.maps.event.addDomListener(window, 'load', function () {
+            new google.maps.places.SearchBox(document.getElementById('txtSource'));
+            new google.maps.places.SearchBox(document.getElementById('txtDestination'));
+            directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
+        });
+
+        function GetRoute() {
+            var itb = new google.maps.LatLng(-6.89148, 107.6106591);
+            var mapOptions = {
+                zoom: 7,
+                center: itb
+            };
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            directionsDisplay.setMap(map);
+            directionsDisplay.setPanel(document.getElementById('right-panel'));
+
+            //*********DIRECTIONS AND ROUTE**********************//
+            source = document.getElementById("txtSource").value;
+            destination = document.getElementById("txtDestination").value;
+
+            var request = {
+                origin: source,
+                destination: destination,
+                travelMode: google.maps.TravelMode.WALKING
+            };
+            directionsService.route(request, function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                }
+            });
+
+            //*********DISTANCE AND DURATION**********************//
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix({
+                origins: [source],
+                destinations: [destination],
+                travelMode: google.maps.TravelMode.WALKING,
+                unitSystem: google.maps.UnitSystem.METRIC,
+                avoidHighways: false,
+                avoidTolls: false
+            }, function (response, status) {
+                if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
+                    var distance = response.rows[0].elements[0].distance.text;
+                    var duration = response.rows[0].elements[0].duration.text;
+                    var dvDistance = document.getElementById("dvDistance");
+                    dvDistance.innerHTML = "";
+                    dvDistance.innerHTML += "Jarak: " + distance + "<br />";
+                    dvDistance.innerHTML += "Estimasi durasi:" + duration;
+
+                } else {
+                    alert("Unable to find the distance via road.");
+                }
+            });
+        }
+    </script>
+<div class="container-fluid">
+<div style="display: block; height: 80px"></div>  
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+    <h3> Informasi dan Petunjuk Ruang <span id="ruang"></span></h3>
+    <pre><code class="html">GET <a href="https://class-navigator.herokuapp.com/class-navigator?q=7601">https://class-navigator.herokuapp.com/class-navigator?q=7601</a></code></pre>
+    <table class="table">
+      <tr>
+        <td>Code</td>
+        <td id="code"></td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td id="name"></td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td id="description"></td>
+      </tr>
+      <tr>
+        <td>Building</td>
+        <td id="building"></td>
+      </tr>
+      <tr>
+        <td>Floor</td>
+        <td id="floor"></td>
+      </tr>
+      <tr>
+        <td>Coordnate</td>
+        <td id="coor"></td>
+      </tr>
+    </table>
+    <div >
+        <input type="text" id="txtSource" value="-6.89148, 107.6106591" style="width: 200px" />
+        <input type="hidden" id="txtDestination" value="" style="width: 200px" />
+        <input type="button" class="btn btn-success" value="Get Route" onclick="GetRoute()" />
+        <hr />
+    </div>
+    <div id="dvDistance">
+    </div>
+   
+    <div id="map" style="height: 500px"> </div>
+    <div id="right-panel"></div>
+
+    </div>
+</div>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+{{end}}
+

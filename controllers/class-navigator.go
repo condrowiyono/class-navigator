@@ -21,6 +21,7 @@ func CheckErr(err error) {
 
 func GetAllClass(w http.ResponseWriter, r *http.Request, psqlInfo string ) {
   	w.Header().Set("Content-Type", "application/json")
+  	w.Header().Set("Access-Control-Allow-Origin", "*")
   	db, err := sql.Open("postgres", psqlInfo)
   	CheckErr(err)
   	defer db.Close()
@@ -47,6 +48,7 @@ func GetAllClass(w http.ResponseWriter, r *http.Request, psqlInfo string ) {
 
 func GetClassByID(w http.ResponseWriter, r *http.Request, psqlInfo string, q string ) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	myid, _ := strconv.Atoi(q)
 	db, err := sql.Open("postgres", psqlInfo)
 	CheckErr(err)
@@ -72,25 +74,24 @@ func GetClassByID(w http.ResponseWriter, r *http.Request, psqlInfo string, q str
 
 func GetClass(w http.ResponseWriter, r *http.Request, psqlInfo string, q string ) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
   	db, err := sql.Open("postgres", psqlInfo)
   	CheckErr(err)
   	defer db.Close()
 
-  	rows, err := db.Query(`SELECT  code,  name,  description,  building, floor, long, lat FROM room WHERE name like $1`,q)
+  	rows, err := db.Query(`SELECT  code,  name,  description,  building, floor, long, lat FROM room WHERE name like $1 LIMIT 1` ,q)
 	CheckErr(err)
 	defer db.Close()
-  
-	var room_navigator []models.RoomNavigator
+
+	room_result := models.RoomNavigator{};
   	for rows.Next() {
-  		var code,name, description, building string
-        var floor int
-        var long, lat float64
-        rows.Scan(&code, &name, &description, &building,&floor, &long, &lat)
+        rows.Scan(&room_result.Code, &room_result.Name, &room_result.Description, &room_result.Building,
+        	&room_result.Floor, &room_result.Long, &room_result.Lat)
 		
-		room_navigator = append(room_navigator, models.RoomNavigator{code,name,description,building,floor,long,lat})
+		json.NewEncoder(w).Encode(&room_result);
+	
 	}
-	roomBytes,_ := json.Marshal(&room_navigator)
-	w.Write(roomBytes)
+	
 	db.Close()
 }
 
