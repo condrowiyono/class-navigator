@@ -4,6 +4,7 @@ import (
   "fmt"
   "log"
   "strconv"
+  "github.com/lib/pq"
   "class-navigator/views"
   "class-navigator/controllers"
   "os"
@@ -23,28 +24,42 @@ func Init() {
 func GetPort() string {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = config.Port
 		log.Println("[-] No PORT environment variable detected. Setting to ", port)
 	}
 	return ":" + port
 }
 
-func main() {
-	//LOADING CONFIGURATION
-	Init()
-  	intport,err :=strconv.Atoi(config.Database.Port)
-	if err != nil { log.Fatal(err) }
-	psqlInfo = fmt.Sprintf("host=%s port=%d user=%s "+
+func GetDBURI() string {
+	var connection string;
+	intport,_:=strconv.Atoi(config.Database.Port)
+	url := os.Getenv("DATABASE_URL")
+	if url !="" {
+		connection, _ = pq.ParseURL(url)
+    	connection += " sslmode=require"
+	} else {
+		connection =  fmt.Sprintf("host=%s port=%d user=%s "+
 			    "password=%s dbname=%s sslmode=disable",
 			    config.Database.Host, intport, 
 			    config.Database.User, 
 			    config.Database.Password, 
 			    config.Database.DBName)
+		log.Println("[-] No DATABASE_URL environment variable detected. Setting to local ")
+	}
+	return connection;
+
+
+}
+
+func main() {
+	//LOADING CONFIGURATION
+	Init()
+  	
+	//CONFIGURE DB
+	psqlInfo = GetDBURI()
 	
 	//CONFIGURE THE PORT
-	
 	addr := GetPort() 
-	
 
 	//ROUTER
 	http.HandleFunc("/", indexHandler)
