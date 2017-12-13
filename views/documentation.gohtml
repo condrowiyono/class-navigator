@@ -102,6 +102,15 @@ curl -X DELETE  http://127.0.0.1:8080/class-navigator/4 -v
 		    		    <pre><code class="sql">
 CREATE TABLE room ( id SERIAL PRIMARY KEY, code VARCHAR(10), name VARCHAR(50), description VARCHAR(100), building VARCHAR(50), floor INTEGER, long REAL, lat REAL);
 		    </code></pre></li>
+		    <li>Import this csv file from psql
+		    	<li>Create this table
+		    		    <pre><code class="sh">
+psql -U {username} -h {host} -d {dbname}
+		    </code></pre></li>
+		    Inside the psql run this
+		    		    <pre><code class="sql">
+COPY room(code,name,description,building,floor,long,lat) FROM '{path to data csv}/data.csv' DELIMITER ';' CSV;
+		    </code></pre></li>
 		    <li>Edit the configure file (conf.json)
 <pre><code class="json">
 {
