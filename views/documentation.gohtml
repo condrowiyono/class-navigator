@@ -68,6 +68,36 @@
 		</table>
 		<h2> Sample Web App using this API</h2>
 		- <a href="/guide">Guidance</a>
+		<h2>Instalation and Contibute</h2>
+		<ol>		
+		    <li>Make sure you've installed Go Lang and PostgreSQL</li>
+		    <li>Clone the git</li>
+		    <li>Create new database on PostgreSQL</li>
+
+		    <li>Create this table
+		    		    <pre><code class="sql">
+CREATE TABLE room ( id SERIAL PRIMARY KEY, code VARCHAR(10), name VARCHAR(50), description VARCHAR(100), building VARCHAR(50), floor INTEGER, long REAL, lat REAL);
+		    </code></pre></li>
+		    <li>Edit the configure file (conf.json)
+<pre><code class="json">
+{
+    "database": {
+        "host": "localhost",
+        "port": "5432",
+        "user": "postgres",
+        "password" : "root",
+        "dbname" : "room_navigator"
+    },
+    "host": "localhost",
+    "port": "8080"
+}
+</code></pre> </li>
+			<li>Build the app and run
+			<pre><code class="sh">go build class-navigator</code></pre>
+			<pre><code class="sh">./class-navigator</code></pre>
+			</li>
+			<li> Open your browser on host and selected port</li>
+    	</ol>
 </div>
 </div>
 </div>

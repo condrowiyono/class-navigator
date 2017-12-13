@@ -1,0 +1,293 @@
+{{define "yield"}}
+<div class="container-fluid">
+<div style="display: block; height: 80px"></div>	
+<div class="row">
+	<div class="col-md-8 col-md-offset-2" >
+		<h2>How this little thing created!!</h2>
+		<h3>About</h3>
+		<p>Class Navigator : <span style="font-weight: 400"></span>This is a RESTful Web Service provide information about the room / class inside ITB, information such as code, name, description, bulding, floor, and the coordinate. See the <a href="/documentation"> Docs </a> for complete explaination </p>
+		The future implementation about this project is to display information and route to the room destination. Sample application shown in this page <a href="/guide"> Guide </a>
+		<h3>Tools</h3>
+		<ul>
+			<li><a href="https://trello.com/b/Z33QTtjm/condro"> Trello</a> for Scrum Board</li> 
+			<li><a href="https://github.com/condrowiyono/class-navigator"> Github</a> for SVN</li>
+			<li><a href="https://baskara-itb.slack.com/messages/G7W639S2Z/">Slack</a> for Team Communication and Managements</li>
+			 <li><a href="https://golang.org/">Go Lang</a> for Main Programming Language and <a href="https://github.com/lib/pq"> lib/pq</a> for PostgreSQL driver</li>
+			 <li><a href="https://www.postgresql.org/">PostgreSQL</a> for Database</li>
+			</ul>
+		<h3>Technical Detail</h3>
+		<p>This Web Service work based on SCRUM </p>
+		<h4>From Analysis Phase/SRS</h4>
+		<h4>Functional Requirement</h4>
+		<ul>
+	    <li>Sistem dapat memberikan informasi tentang sebuah ruang kelas</li>
+	    <li>Sistem dapat memberikan petunjuk arah dari lokasi saat ini dengan ruang kelas yang dituju</li>
+	    <li>Sistem dapat menerima masukan berupa MIME application/json</li>
+	    <li>Sistem dapat menyediakan luaran bkerupa JSON yang dapat digunakan oleh sebuah aplikasi untuk menampilkan informasi dan membuat petunjuk arah melalui Google Maps</li>
+	    <li>Sistem dapat menyimpan data log berupa lokasi sekarang dan kelas</li>
+	    <li>Sistem dapat menerima masukan baru data ruangan (permission needed)</li>
+		</ul>
+
+		<h4>Non-Functional Requirement</h4>
+	    <ul>
+	    <li>Sistem dapat menerima penggunaan secara bersamaan untuk 5 - 10 pengguna</li>
+	    <li>Sistem memiliki penyimpanan yang cukup untuk data 1 bulan</li>
+	    <li>Respon time untuk pencarian maksimal 20ms, dan 1s untuk memperoleh data dari Google Maps</li>
+	    <li>Up-time web service adalah 24/7, dengan toleransi sistem mati sebesar 5%</li>
+	    <li>Kesalahan sistem yang ditoleransi adalah 3 %		</li>
+		</ul>
+		<h4>Design</h4>
+		<img src="https://raw.githubusercontent.com/condrowiyono/class-navigator/master/modelling/Design.png">
+		<h3>ERD</h3>
+		<img src="https://trello-attachments.s3.amazonaws.com/5a0a554e20d519d1d5e208e5/5a0d239aadf685b6aaf63a00/652689103d37af20b48339ae451bb94c/image.png">
+		<h4>Directory Structure</h4>
+		<p> Using MVC approach </p>
+		<img src="https://trello-attachments.s3.amazonaws.com/5a0a554e20d519d1d5e208e5/5a0d221e8a6a54d0460a9079/d23e8dbdb02725fd2091cf88ebba9272/gambar.png">
+		<h4>Sample Code</h4>
+		See all the code on github above
+		<h4>Config</h4>
+		<pre><code>config.go</code></pre> 
+		Load Config File
+		<pre><code class="go">
+package main
+import (
+  "encoding/json"
+  "os"
+  "fmt"
+)
+/* conf.json
+
+{
+    "database": {
+        "host": "localhost",
+        "port": "5432",
+        "user": "postgres",
+        "password" : "root",
+        "dbname" : "room_navigator"
+    },
+    "host": "localhost",
+    "port": "8080"
+}
+*/
+
+type Config struct {
+    Database struct {
+        Host     string `json:"host"`
+        Port   string `json:"port"`
+        User     string `json:"user"`
+        Password string `json:"password"`
+        DBName   string `json:"dbname"`
+    } `json:"database"`
+    Host string `json:"host"`
+    Port string `json:"port"`
+}
+
+func LoadConfiguration() (Config,error) {
+    var config Config
+    configFile, err := os.Open("conf.json")
+    defer configFile.Close()
+    if err != nil {
+        fmt.Println(err.Error())
+    }
+    jsonParser := json.NewDecoder(configFile)
+    jsonParser.Decode(&config)
+    return config,nil
+}
+		</code></pre>
+		<h4>Main</h4>
+		<pre><code>main.go</code></pre> 
+		as handler and router
+		<pre><code class="go">
+//Code before
+func main() {
+	//LOADING CONFIGURATION
+	Init()
+  	
+	//CONFIGURE DB
+	psqlInfo = GetDBURI()
+	
+	//CONFIGURE THE PORT
+	addr := GetPort() 
+
+	//ROUTER
+	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/documentation", docHandler)
+	http.HandleFunc("/about", aboutHandler)
+	http.HandleFunc("/guide", guideHandler)
+	http.HandleFunc("/bts", btsHandler)
+	http.HandleFunc("/class-navigator", func(w http.ResponseWriter, r *http.Request){
+		switch r.Method {
+		case "GET" :
+			var q string
+			q = fmt.Sprint("%"+ r.FormValue("q") + "%")
+			controllers.GetClass(w,r,psqlInfo,q)		
+		}
+	})
+
+	log.Printf("Server starting on port %v\n", addr)
+	log.Fatal(http.ListenAndServe(addr,nil))
+}
+
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {  
+	index = views.NewView("bootstrap", "views/index.gohtml" )
+  	index.Render(w, nil)
+}
+// More Code
+		</code></pre> 
+		<h4>Model</h4>
+		<pre><code>model/class-navigator.go</code></pre> 
+		as model
+		<pre><code class="go">
+//Code before
+package models
+
+type RoomNavigator struct {
+	Code string
+	Name string
+	Description string
+	Building string
+	Floor int
+	Long float64
+	Lat float64
+}
+
+type RoomIndex struct {
+	ID int
+	Code string
+	Name string
+	Building string
+	Floor int
+}
+// More Code
+		</code></pre> 
+		<h4>Controller</h4>
+		<pre><code>controller/class-navigator.go</code></pre> 
+		<pre><code class="go">
+//Code before
+
+func GetClass(w http.ResponseWriter, r *http.Request, psqlInfo string, q string ) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+  	db, err := sql.Open("postgres", psqlInfo)
+  	CheckErr(err)
+  	defer db.Close()
+
+  	rows, err := db.Query(`SELECT  code,  name,  description,  building, floor, long, lat FROM room WHERE name like $1 LIMIT 1` ,q)
+	CheckErr(err)
+	defer db.Close()
+
+	room_result := models.RoomNavigator{};
+  	for rows.Next() {
+        rows.Scan(&room_result.Code, &room_result.Name, &room_result.Description, &room_result.Building,
+        	&room_result.Floor, &room_result.Long, &room_result.Lat)
+		
+		json.NewEncoder(w).Encode(&room_result);
+	
+	}
+	
+	db.Close()
+}
+
+//POST
+func PostNewRoom(w http.ResponseWriter, r *http.Request, psqlInfo string) {
+	out := make([] byte, 1024)
+
+	bodyLen, err := r.Body.Read(out)
+
+	if err != io.EOF {
+		fmt.Printf(err.Error())
+		w.Write([]byte("{error:" + err.Error() + "}"))
+		return
+	} 
+	var k models.RoomNavigator
+	err = json.Unmarshal(out[:bodyLen],&k)
+	if err != nil {
+		w.Write([]byte("{error:" + err.Error() + "}"))
+		return
+	}
+
+	idx := insertInDatabase(k,psqlInfo)
+	log.Printf(" affect %d",idx)
+	w.Write([]byte(`{"error":"success"}`))
+}
+
+func insertInDatabase(data models.RoomNavigator, psqlInfo string) int64 {
+	db, err := sql.Open("postgres", psqlInfo)
+  	CheckErr(err)
+  	defer db.Close()
+
+	result, err := db.Exec(`INSERT INTO room (code,name,description,building,floor, long, lat) VALUES ($1,$2,$3,$4,$5,$6,$7)`, 
+		data.Code, data.Name, data.Description, data.Building, data.Floor, data.Long, data.Lat)
+	CheckErr(err)
+	affect,_ := result.RowsAffected(); 
+	return affect
+}
+
+
+//DELETE
+func DeleteRoom(w http.ResponseWriter, r *http.Request, psqlInfo string, p string) {
+	myid, _ := strconv.Atoi(p)
+	db, err := sql.Open("postgres", psqlInfo)
+  	CheckErr(err)
+  	defer db.Close()
+
+	result, err := db.Exec(` DELETE FROM room WHERE id=$1`,myid)
+	CheckErr(err)
+	affect, err := result.RowsAffected()
+    CheckErr(err)
+    fmt.Println(affect)
+
+}
+
+
+// More Code
+		</code></pre> 
+		<h4>View Template</h4>
+		<pre><code>views/layouts/bootstrap.gohtml</code></pre>
+		<h4>File</h4>
+		<pre><code>views/about.gohtml</code></pre>
+		<h4>View Handler</h4>
+		<pre><code>views/view.go</code></pre>
+		<pre><code class="go">
+type View struct {  
+  Template *template.Template
+  Layout   string
+}
+
+func NewView(layout string, files ...string) *View {  
+  files = append(files, LayoutFiles()...)
+  t, err := template.ParseFiles(files...)
+  if err != nil {
+    panic(err)
+  }
+
+  return &View{
+    Template: t,
+    Layout:   layout,
+  }
+}
+
+
+func (v *View) Render(w http.ResponseWriter, data interface{}) error {  
+  return v.Template.ExecuteTemplate(w, v.Layout, data)
+}
+
+func LayoutFiles() []string {
+  files, err := filepath.Glob("views/layouts" + "/*.gohtml")
+  if err != nil {
+    panic(err)
+  }
+  return files
+}
+</code></pre>
+		<h4>Progress on Github</h4>
+		<img src="https://trello-attachments.s3.amazonaws.com/5a0a554e20d519d1d5e208e5/5a30a6a0832aac4339317ac1/8f026fb11696c437af32d111721d9db1/imageedit_2_7662220519.jpg">
+</div>
+
+</div>
+</div>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/go.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+{{end}}
