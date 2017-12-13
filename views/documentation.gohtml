@@ -9,7 +9,7 @@
 		or on heroku server
 		<pre><code class="html">GET <a href="https://class-navigator.herokuapp.com/class-navigator?q=7601">https://class-navigator.herokuapp.com/class-navigator?q=7601</a></code></pre>
 		or in ITB netword
-		<pre><code class="html">Menyusul</code></pre>
+		<pre><code class="html">GET <a href="//167.205.67.249:4747/class-navigator?q=7601">https://class-navigator.herokuapp.com/class-navigator?q=7601</a></code></pre>
 		This would render a JSON response like the following
 		<pre><code class="json">
 {	
@@ -66,6 +66,30 @@
 			</tr>
 
 		</table>
+		<h2>Advanced User!!</h2>
+		<p>Explained another method</p>
+		<img src="https://trello-attachments.s3.amazonaws.com/5a0a554e20d519d1d5e208e5/5a2f6dd16a3ed3b82a80bfe5/119b3ef170d4f2af2137dcec65a74658/image.png">
+		<h3>See All Class</h3>
+		<pre> <code class="sh">
+curl -X GET localhost:8080/class-navigator/
+		</code></pre>
+		Resulting  this json
+		<pre> <code class="json">
+[{"ID":5,"Code":"7606","Name":"Ruang Kuliah 7606","Building":"Labtek V / Gd Benny Subianto","Floor":3},{"ID":6,"Code":"7606","Name":"Ruang Kuliah 7606","Building":"Labtek V / Gd Benny Subianto","Floor":3},{"ID":9,"Code":"7601","Name":"Ruang Kuliah 7601","Building":"Labtek V / Gd Benny Subianto","Floor":1},{"ID":10,"Code":"7601","Name":"Ruang Kuliah 7601","Building":"Labtek V / Gd Benny Subianto","Floor":1}]
+		</code></pre>
+		<h3>Post Data</h3>
+		<pre> <code class="sh">
+curl -X POST -H "Content-Type: application/json" -d '{"Code":"7606","Name":"Ruang Kuliah 7606","Description":"Ruang kelas reguler untuk prodi IF","Building":"Labtek V / Gd Benny Subianto","Floor":3,"Long":-6.890581130981445,"Lat":107.60758972167969}' http://127.0.0.1:8080/class-navigator/ -v
+		</code></pre>
+		
+		<h3>Update Data</h3>
+		<pre> <code class="sh">
+curl -X PATCH -H "Content-Type: application/json" -d '{"Code":"7606","Name":"Ruang Kuliah 7606","Description":"Ruang kelodi IF","Building":"Labtek V / Gd Benny Subianto","Floor":3,"Long":-6.890581130981445,"Lat":107.60758972167969}' http://127.0.0.1:8080/class-navigator/3 -v
+		</code></pre>
+		<h3>Delete</h3>
+		<pre> <code class="sh">
+curl -X DELETE  http://127.0.0.1:8080/class-navigator/4 -v
+		</code></pre>
 		<h2> Sample Web App using this API</h2>
 		- <a href="/guide">Guidance</a>
 		<h2>Instalation and Contibute</h2>
